@@ -4,10 +4,10 @@ from .forms import UserForm
 
 
 def index(request):
+    userform = UserForm()
     if request.method == 'POST':
-        name = request.POST.get('name') # получить значение поля Имя
-        age = request.POST.get('age') # получить значение поля Возраст
-        return HttpResponse(f'<h2>Привет, {name}, твой возраст: {age}</h2>')
-    else:
-        userform = UserForm()
-        return render(request, 'index.html', {'form': userform})
+        userform = UserForm(request.POST)
+        if userform.is_valid():
+            name = userform.cleaned_data['name']
+            return HttpResponse(f'<h2>Hello, {name}</h2>')
+    return render(request, 'index.html', {"form": userform})
