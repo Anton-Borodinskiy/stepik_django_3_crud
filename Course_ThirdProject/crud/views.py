@@ -77,6 +77,7 @@ def delete(request, id):
 # # Изменение данных в БД
 # def edit(request, id):
 #     try:
+#         id = request.GET.get('id')
 #         person = Person.objects.get(id=id)
 #     except Person.DoesNotExist:
 #         return HttpResponseNotFound('<h2>Person not found</h2>')
@@ -102,3 +103,25 @@ def delete(request, id):
 #
 #     person.delete()
 #     return HttpResponseRedirect('/')
+
+
+#EDIT EXAMPLE
+# from django.forms.models import model_to_dict
+# from django.shortcuts import render
+# from django.http import HttpResponseNotFound, HttpResponseRedirect
+#
+# from main_app.models import User
+# from main_app.forms import UserForm
+#
+#
+# def edit_profile(request, id):
+#     user = User.objects.filter(id=id)
+#     if user:
+#         if request.method == 'POST':
+#             form = UserForm(request.POST)
+#             if form.is_valid():
+#                 user.update(**form.cleaned_data)
+#             return HttpResponseRedirect(f'/user_profile/{id}/')
+#         form = UserForm(model_to_dict(user.first()))
+#         return render(request, 'edit_profile.html', {'user_form': form})
+#     return HttpResponseNotFound(f'<h2>User profile with id={id} not found</h2>')
